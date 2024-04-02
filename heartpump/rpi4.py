@@ -1,12 +1,13 @@
 import RPi.GPIO as GPIO
+import asyncio
 import math
 from datetime import datetime
 from time import sleep
-from contextlib import AbstractContextManager
+from contextlib import AbstractAsyncContextManager
 import logging
 logger = logging.getLogger(__name__)
 
-class MotorDriver(AbstractContextManager):
+class MotorDriver(AbstractAsyncContextManager):
     def __init__(self, in1 = 24, in2 = 23, en = 25, freq=10_000):
         self.in1 = in1
         self.in2 = in2
@@ -50,13 +51,13 @@ class MotorDriver(AbstractContextManager):
     def set_speed(self, s):
         self.p.ChangeDutyCycle(s)
 
-    def __enter__(self):
+    async def __aenter__(self):
         logger.info("Entering...")
         self.setup_pins()
         self.p.start(25)
         return self
 
-    def __exit__(self, exc_type, exc_value, exc_traceback):
+    async def __aexit__(self, exc_type, exc_value, exc_traceback):
         logger.info("Exiting...")
         self.p.stop()
         GPIO.cleanup()
