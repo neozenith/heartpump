@@ -1,0 +1,8 @@
+# Install self
+-e .
+
+# Core dependencies
+-r requirements.in
+
+# Dev tools
+ruff
