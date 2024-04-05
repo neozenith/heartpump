@@ -2,6 +2,7 @@
 import logging
 from collections import namedtuple
 from dataclasses import KW_ONLY, dataclass
+import platform
 
 # Third Party
 from bleak.backends.characteristic import BleakGATTCharacteristic
@@ -10,8 +11,20 @@ from bleak.backends.scanner import AdvertisementData
 
 logger = logging.getLogger(__name__)
 
-TICKRX_DEVICE_UUID = "7EABC224-2836-5894-4F9A-1B583050849E"
+TICKRX_DEVICE_UUID = "7EABC224-2836-5894-4F9A-1B583050849E" # macOS uses a UUID instead of raw MAC address
+TICKRX_DEVICE_MAC_ADDRESS="EC:6F:C0:6C:14:08"
 TICKRX_DEVICE_NAME = "TICKR X 6CDA"
+TICKRX_DEVICE_ID = TICKRX_DEVICE_MAC_ADDRESS if platform.system() != "Darwin" else TICKRX_DEVICE_UUID
+
+
+# INFO:__main__:Starting
+# INFO:heartpump.ble:Discovering...
+# INFO:heartpump.ble:Found: EC:6F:C0:6C:14:08, (BLEDevice(EC:6F:C0:6C:14:08, TICKR X 6CDA), AdvertisementData(local_name='TICKR X 6CDA', service_uuids=['0000180d-0000-1000-8000-00805f9b34fb', '00001814-0000-1000-8000-00805f9b34fb', '00001816-0000-1000-8000-00805f9b34fb', 'a026ee04-0a7d-4ab3-97fa-f1500f9feb8b'], rssi=-51))
+# INFO:__main__:device=BLEDevice(EC:6F:C0:6C:14:08, TICKR X 6CDA)
+# INFO:heartpump.ble:Start listening...
+# INFO:heartpump.ble:EC:6F:C0:6C:14:08
+# INFO:heartpump.ble:0000180d-0000-1000-8000-00805f9b34fb
+
 
 # 0000180f-0000-1000-8000-00805f9b34fb (Handle: 12): Battery Service
 # 0000180a-0000-1000-8000-00805f9b34fb (Handle: 16): Device Information

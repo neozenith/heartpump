@@ -45,7 +45,7 @@ class MotorDriver(AbstractAsyncContextManager):
         # I want the positive half of the wave to map to duty cycle 0-100
         # I want the negative half of the wave to map to duty cycle 0
         heart_intensity = max(100.0 * math.sin(t * (2*math.pi) / wavelength), 0)
-        logger.info(f"{datetime.now()} {t=} {wavelength=} {bpm=} {heart_intensity=}")
+        # logger.info(f"{datetime.now()} {t=} {wavelength=} {bpm=} {heart_intensity=}")
         self.set_speed(heart_intensity)
 
     def set_speed(self, s):

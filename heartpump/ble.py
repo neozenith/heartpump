@@ -43,7 +43,7 @@ def discover_filter(target: str, device: BLEDevice, adv_data: AdvertisementData)
 async def listen_notifications(device: BLEDevice, service: str, char_uuid: str, char_notify_handler, timeout=20):
     """Listen for HRM data events."""
     logger.info("Start listening...")
-    async with BleakClient(device, timeout=30) as client:
+    async with BleakClient("EC:6F:C0:6C:14:08", services=[service], timeout=30) as client:
         logger.info(client.address)
         logger.info(service)
 
